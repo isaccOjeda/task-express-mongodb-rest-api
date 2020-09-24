@@ -1,0 +1,32 @@
+GET http://localhost:3000/tasks
+
+###
+
+
+GET http://localhost:3000/tasks/5f6d1b20ae08853bf8cdc6d9
+
+###
+
+
+POST http://localhost:3000/tasks
+Content-Type: application/json
+
+{
+  "title": "Tender cama",
+  "description": "Arreglar el estado de la cama...."
+}
+
+###
+
+DELETE http://localhost:3000/tasks/5f6d1b20ae08853bf8cdc6d9
+
+###
+
+PATCH  http://localhost:3000/tasks/5f6d1afdae08853bf8cdc6d8
+Content-Type: application/json
+
+{
+  
+  "completed": false
+  
+}
