@@ -1,32 +1,32 @@
-GET http://localhost:3000/tasks
+GET http://localhost:8080/tasks
 
 ###
 
 
-GET http://localhost:3000/tasks/5f6d1b20ae08853bf8cdc6d9
+GET http://localhost:8080/tasks/5f6d1b20ae08853bf8cdc6d9
 
 ###
 
 
-POST http://localhost:3000/tasks
+POST http://localhost:8080/tasks
 Content-Type: application/json
 
 {
-  "title": "Tender cama",
-  "description": "Arreglar el estado de la cama...."
+  "title": "Dormir temprano",
+  "description": "Tener un sueño reparador...."
 }
 
 ###
 
-DELETE http://localhost:3000/tasks/5f6d1b20ae08853bf8cdc6d9
+DELETE http://localhost:8080/tasks/5f6da42f96eb2d13a06f5730
 
 ###
 
-PATCH  http://localhost:3000/tasks/5f6d1afdae08853bf8cdc6d8
+PATCH  http://localhost:8080/tasks/5f6d255296eb2d13a06f572b
 Content-Type: application/json
 
 {
   
-  "completed": false
+  "completed": true
   
 }
