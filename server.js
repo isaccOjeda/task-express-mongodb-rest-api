@@ -15,6 +15,8 @@ db.once("open", () => console.log("connected to database"));
 app.use(express.json());
 
 const tasksRouter = require("./routes/tasks");
+const categoriesRouter = require("./routes/categories");
 app.use("/tasks", tasksRouter);
+app.use("/categories", categoriesRouter);
 
 app.listen(8080, () => console.log("server started"));

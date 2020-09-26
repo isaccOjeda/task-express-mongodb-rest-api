@@ -1,11 +1,22 @@
 const express = require("express");
 const router = express.Router();
 const Task = require("../models/task");
+const Category = require("../models/category");
 
 // Getting all
 router.get("/", async (req, res) => {
   try {
-    const tasks = await Task.find();
+    const tasks = await Task.find({ category: req.body.category });
+    res.json(tasks);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+// Get by category.
+router.get("/category=:category", getCategory, async (req, res) => {
+  try {
+    const tasks = await Task.find({ category: req.params.category });
     res.json(tasks);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -18,10 +29,11 @@ router.get("/:id", getTask, (req, res) => {
 });
 
 // Creating one
-router.post("/", async (req, res) => {
+router.post("/", getCategory, async (req, res) => {
   const task = new Task({
     title: req.body.title,
     description: req.body.description,
+    category: req.body.category,
   });
   try {
     const newTask = await task.save();
@@ -60,6 +72,7 @@ router.delete("/:id", getTask, async (req, res) => {
   }
 });
 
+// This function serve as a middleware for make sure that the tasks exist.
 async function getTask(req, res, next) {
   let task;
   try {
@@ -72,6 +85,27 @@ async function getTask(req, res, next) {
   }
 
   res.task = task;
+  next();
+}
+
+// This function serve as a middleware for make sure that the category exist.
+async function getCategory(req, res, next) {
+  let category;
+  try {
+    if (req.params.category) {
+      category = await Category.findById(req.params.category);
+    } else {
+      category = await Category.findById(req.body.category);
+    }
+
+    if (category == null) {
+      return res.status(404).json({ message: "Cannot find Category" });
+    }
+  } catch (err) {
+    return res.status(500).json({ message: err.message });
+  }
+
+  res.category = category;
   next();
 }
 

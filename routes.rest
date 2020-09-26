@@ -1,27 +1,40 @@
+// Tasks Routes.
+
+// Get all tasks.
 GET http://localhost:8080/tasks
 
 ###
 
 
-GET http://localhost:8080/tasks/5f6d1b20ae08853bf8cdc6d9
+// Get one task.
+GET http://localhost:8080/tasks/5f6fbd7d2fe798223853b361
 
 ###
 
+// Gets task filtered by category.
+GET http://localhost:8080/tasks/category=5f6fbd882fe798223853b362
 
-POST http://localhost:8080/tasks
+###
+
+// Create a Task.
+POST http://localhost:8080/tasks/
 Content-Type: application/json
 
 {
-  "title": "Dormir temprano",
-  "description": "Tener un sueño reparador...."
+  "title": "Simon que si",
+  "description": "Tener un sueño reparador....",
+  "category": "5f6fbd7d2fe798223853b361"
+  
 }
 
 ###
 
-DELETE http://localhost:8080/tasks/5f6da42f96eb2d13a06f5730
+// Deletes a Task.
+DELETE http://localhost:8080/tasks/5f6fbafb71b2561148d1d49b
 
 ###
 
+// Update one or more attributes from a task.
 PATCH  http://localhost:8080/tasks/5f6d255296eb2d13a06f572b
 Content-Type: application/json
 
@@ -30,3 +43,45 @@ Content-Type: application/json
   "completed": true
   
 }
+
+###
+// Category Routes
+
+// Get all categories.
+GET http://localhost:8080/categories
+
+###
+
+
+// Get an individual category
+GET http://localhost:8080/categories/5f6fc8f02eae5c63a410ae8e
+
+###
+
+// Create one category.
+POST http://localhost:8080/categories
+Content-Type: application/json
+
+{
+  "name": "House"
+  
+}
+
+###
+
+// Deletes a Category.
+DELETE http://localhost:8080/categories/5f6fbd882fe798223853b362
+
+
+###
+
+// Updates one or more attributes from a category.
+PATCH  http://localhost:8080/categories/5f6fc8f02eae5c63a410ae8e
+Content-Type: application/json
+
+{
+  "name": "Work"
+  
+}
+
+###

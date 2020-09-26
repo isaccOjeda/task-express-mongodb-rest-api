@@ -16,6 +16,10 @@ const taskSchema = new Schema({
     required: true,
     default: Date.now,
   },
+  category: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Category",
+  },
 });
 
 module.exports = mongoose.model("Tasks", taskSchema);
