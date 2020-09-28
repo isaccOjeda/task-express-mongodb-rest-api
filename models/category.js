@@ -6,6 +6,18 @@ const CategorySchema = new Schema({
     type: String,
     required: true,
   },
+  main_color: {
+    type: String,
+    required: true,
+  },
+  dark_color: {
+    type: String,
+    required: true,
+  },
+  light_color: {
+    type: String,
+    required: true,
+  },
   created_at: {
     type: Date,
     required: true,

@@ -6,7 +6,7 @@ const Category = require("../models/category");
 // Getting all
 router.get("/", async (req, res) => {
   try {
-    const tasks = await Task.find({ category: req.body.category });
+    const tasks = await Task.find();
     res.json(tasks);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -54,6 +54,7 @@ router.patch("/:id", getTask, async (req, res) => {
   if (req.body.completed != null) {
     res.task.completed = req.body.completed;
   }
+
   try {
     const updatedTask = await res.task.save();
     res.json(updatedTask);

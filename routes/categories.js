@@ -21,6 +21,9 @@ router.get("/:id", getCategory, (req, res) => {
 router.post("/", async (req, res) => {
   const category = new Category({
     name: req.body.name,
+    main_color: req.body.main_color,
+    dark_color: req.body.dark_color,
+    light_color: req.body.light_color,
   });
   try {
     const newCategory = await category.save();
@@ -34,6 +37,15 @@ router.post("/", async (req, res) => {
 router.patch("/:id", getCategory, async (req, res) => {
   if (req.body.name != null) {
     res.category.name = req.body.name;
+  }
+  if (req.body.main_color != null) {
+    res.category.main_color = req.body.main_color;
+  }
+  if (req.body.dark_color != null) {
+    res.category.dark_color = req.body.dark_color;
+  }
+  if (req.body.light_color != null) {
+    res.category.light_color = req.body.light_color;
   }
 
   try {
