@@ -2,11 +2,14 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const taskSchema = new Schema({
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+  },
   title: {
     type: String,
     required: true,
   },
-  description: String,
   completed: {
     type: Boolean,
     default: false,

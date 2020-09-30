@@ -2,11 +2,12 @@ const express = require("express");
 const router = express.Router();
 const Task = require("../models/task");
 const Category = require("../models/category");
+const verify = require("../verifyTokem");
 
 // Getting all
-router.get("/", async (req, res) => {
+router.get("/", verify, async (req, res) => {
   try {
-    const tasks = await Task.find();
+    const tasks = await Task.find({ user: req.user._id });
     res.json(tasks);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -14,9 +15,12 @@ router.get("/", async (req, res) => {
 });
 
 // Get by category.
-router.get("/category=:category", getCategory, async (req, res) => {
+router.get("/category=:category", verify, getCategory, async (req, res) => {
   try {
-    const tasks = await Task.find({ category: req.params.category });
+    const tasks = await Task.find({
+      user: req.user._id,
+      category: req.params.category,
+    });
     res.json(tasks);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -24,15 +28,15 @@ router.get("/category=:category", getCategory, async (req, res) => {
 });
 
 // Getting One
-router.get("/:id", getTask, (req, res) => {
+router.get("/:id", verify, getTask, (req, res) => {
   res.json(res.task);
 });
 
 // Creating one
-router.post("/", getCategory, async (req, res) => {
+router.post("/", verify, getCategory, async (req, res) => {
   const task = new Task({
+    user: req.user._id,
     title: req.body.title,
-    description: req.body.description,
     category: req.body.category,
   });
   try {
@@ -44,7 +48,7 @@ router.post("/", getCategory, async (req, res) => {
 });
 
 // Updating One
-router.patch("/:id", getTask, async (req, res) => {
+router.patch("/:id", verify, getTask, async (req, res) => {
   if (req.body.title != null) {
     res.task.title = req.body.title;
   }
@@ -64,7 +68,7 @@ router.patch("/:id", getTask, async (req, res) => {
 });
 
 // Deleting One
-router.delete("/:id", getTask, async (req, res) => {
+router.delete("/:id", verify, getTask, async (req, res) => {
   try {
     await res.task.remove();
     res.json({ message: "Deleted Task" });

@@ -1,11 +1,12 @@
 const express = require("express");
 const router = express.Router();
 const Category = require("../models/category");
+const verify = require("../verifyTokem");
 
 // Getting all.
-router.get("/", async (req, res) => {
+router.get("/", verify, async (req, res) => {
   try {
-    const categories = await Category.find();
+    const categories = await Category.find({ user: req.user._id });
     res.json(categories);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -13,13 +14,14 @@ router.get("/", async (req, res) => {
 });
 
 // Getting One
-router.get("/:id", getCategory, (req, res) => {
+router.get("/:id", verify, getCategory, (req, res) => {
   res.json(res.category);
 });
 
 // Creating one
-router.post("/", async (req, res) => {
+router.post("/", verify, async (req, res) => {
   const category = new Category({
+    user: req.user._id,
     name: req.body.name,
     main_color: req.body.main_color,
     dark_color: req.body.dark_color,
@@ -34,7 +36,7 @@ router.post("/", async (req, res) => {
 });
 
 // Updating One
-router.patch("/:id", getCategory, async (req, res) => {
+router.patch("/:id", verify, getCategory, async (req, res) => {
   if (req.body.name != null) {
     res.category.name = req.body.name;
   }
@@ -57,7 +59,7 @@ router.patch("/:id", getCategory, async (req, res) => {
 });
 
 // Deleting One
-router.delete("/:id", getCategory, async (req, res) => {
+router.delete("/:id", verify, getCategory, async (req, res) => {
   try {
     await res.category.remove();
     res.json({ message: "Category Deleted!" });

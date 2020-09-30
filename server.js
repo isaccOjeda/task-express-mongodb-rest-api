@@ -16,7 +16,9 @@ app.use(express.json());
 
 const tasksRouter = require("./routes/tasks");
 const categoriesRouter = require("./routes/categories");
+const authRouter = require("./routes/auth");
 app.use("/tasks", tasksRouter);
 app.use("/categories", categoriesRouter);
+app.use("/auth", authRouter);
 
 app.listen(8080, () => console.log("server started"));
