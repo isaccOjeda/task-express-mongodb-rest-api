@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
-const taskSchema = new Schema({
+const TaskSchema = new Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
@@ -19,10 +19,10 @@ const taskSchema = new Schema({
     required: true,
     default: Date.now,
   },
-  category: {
+  task_list: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Category",
+    ref: "TaskList",
   },
 });
 
-module.exports = mongoose.model("Tasks", taskSchema);
+module.exports = mongoose.model("Task", TaskSchema);

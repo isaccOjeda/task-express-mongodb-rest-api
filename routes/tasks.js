@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const Task = require("../models/task");
-const Category = require("../models/category");
+const Task = require("../models/Task");
+const TaskList = require("../models/TaskList");
 const verify = require("../verifyTokem");
 
 // Getting all
@@ -14,12 +14,12 @@ router.get("/", verify, async (req, res) => {
   }
 });
 
-// Get by category.
-router.get("/category=:category", verify, getCategory, async (req, res) => {
+// Get by task_list.
+router.get("/task_list=:task_list", verify, getTaskList, async (req, res) => {
   try {
     const tasks = await Task.find({
       user: req.user._id,
-      category: req.params.category,
+      task_list: req.params.task_list,
     });
     res.json(tasks);
   } catch (err) {
@@ -33,11 +33,11 @@ router.get("/:id", verify, getTask, (req, res) => {
 });
 
 // Creating one
-router.post("/", verify, getCategory, async (req, res) => {
+router.post("/", verify, getTaskList, async (req, res) => {
   const task = new Task({
     user: req.user._id,
     title: req.body.title,
-    category: req.body.category,
+    task_list: req.body.task_list,
   });
   try {
     const newTask = await task.save();
@@ -93,24 +93,24 @@ async function getTask(req, res, next) {
   next();
 }
 
-// This function serve as a middleware for make sure that the category exist.
-async function getCategory(req, res, next) {
-  let category;
+// This function serve as a middleware for make sure that the task_list exist.
+async function getTaskList(req, res, next) {
+  let task_list;
   try {
-    if (req.params.category) {
-      category = await Category.findById(req.params.category);
+    if (req.params.task_list) {
+      task_list = await TaskList.findById(req.params.task_list);
     } else {
-      category = await Category.findById(req.body.category);
+      task_list = await TaskList.findById(req.body.task_list);
     }
 
-    if (category == null) {
-      return res.status(404).json({ message: "Cannot find Category" });
+    if (task_list == null) {
+      return res.status(404).json({ message: "Cannot find TaskList" });
     }
   } catch (err) {
     return res.status(500).json({ message: err.message });
   }
 
-  res.category = category;
+  res.task_list = task_list;
   next();
 }
 

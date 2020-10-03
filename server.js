@@ -15,10 +15,10 @@ db.once("open", () => console.log("connected to database"));
 app.use(express.json());
 
 const tasksRouter = require("./routes/tasks");
-const categoriesRouter = require("./routes/categories");
+const taskListRouter = require("./routes/taskLists");
 const authRouter = require("./routes/auth");
 app.use("/tasks", tasksRouter);
-app.use("/categories", categoriesRouter);
+app.use("/task_list", taskListRouter);
 app.use("/auth", authRouter);
 
 app.listen(8080, () => console.log("server started"));
