@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const TaskList = require("../models/TaskList");
+const Task = require("../models/Task");
 const verify = require("../verifyTokem");
 
 // Getting all.
@@ -61,6 +62,7 @@ router.patch("/:id", verify, getTaskList, async (req, res) => {
 // Deleting One
 router.delete("/:id", verify, getTaskList, async (req, res) => {
   try {
+    await Task.deleteMany({ task_list: res.task_list._id });
     await res.task_list.remove();
     res.json({ message: "TaskList Deleted!" });
   } catch (err) {
